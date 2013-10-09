@@ -10,6 +10,8 @@ class BlackJack(object):
         self.discard = [17,18,19,20]
         self.table = {'Row 1':[1,2,3,4,5], 'Row 2':[6,7,8,9,10], 'Row 3':[11,12,13], 'Row 4': [14,15,16]}
 
+    # Game Scoring methods
+
     def scoreGame(self, table):
         '''Uses the scoring functions which score both the row and column hands,
         and returns a total score.''' 
@@ -138,8 +140,9 @@ class BlackJack(object):
         columns += [c5]
         return columns
 
+    # Game Playing methods
+
     def play(self): 
-        # print
         table = self.getTable()
         print "Table: " + str(table)
         discard = self.getDiscard()
@@ -150,6 +153,7 @@ class BlackJack(object):
         deck = Deck()
         complete = False
         while not complete:
+            #TODO Priority Low - should we shuffle the cards every time we loop?
             deck.shuffle()
             card = deck.deal()
             print card
@@ -240,8 +244,8 @@ class BlackJack(object):
         e) Discard
         '''
         inp1 = raw_input(userPrompt)
-        while not self.isValidInput(inp1):
-            print self.invalidInputStatement(inp1)
+        while not self.isValidRow(inp1):
+            self.invalidInputStatement(inp1)
             inp1 = raw_input(userPrompt)
         if inp1 == 'a':
             row = 'Row 1'
@@ -284,10 +288,10 @@ class BlackJack(object):
 
 
     # Data validation methods
-    def isValidInput(self, text):
+    def isValidRow(self, text):
         """
-        Any type -> Boolean
-        Takes an input and returns True only if the input is valid (a, b, c, d, or e)
+        String -> Boolean
+        Returns true only if text is a, b, c, d or e
         """
         text = text.strip()
         text = text.lower()
@@ -295,6 +299,32 @@ class BlackJack(object):
         if not text in valid_inputs:
             return False
         return True
+
+    def isValidSlot(self, text, slots):
+        """
+        String, List[String,...]
+        Takes an input and returns True only if the input is valid (is an integer and is a valid slot)
+        """
+        if not self.isInteger(text):
+            return False
+        if not text in slots:
+            return False
+        return True
+
+    def isInteger(self,text):
+        """
+        Any type -> Bool
+        Takes an input and returns True only if the input is a valid integer
+        """
+        text = text.strip()
+        dot = text.find('.')
+        if dot > -1:
+            return False
+        try:
+            int(text)
+            return True
+        except:
+            return False
 
     def isString(self, text):
         """

@@ -81,21 +81,46 @@ class TestCards(unittest.TestCase):
         discard = b.getDiscard()
         self.assertEqual([17, 18, 19, 20], b.getDiscard())
 
-    def testisValidInput(self):
+    def testisValidRow(self):
         b = BlackJack()
-        self.assertTrue(b.isValidInput('a'))
+        self.assertTrue(b.isValidRow('a'))
 
     def testisValidInput1(self):
         b = BlackJack()
-        self.assertTrue(b.isValidInput('E'))
+        self.assertTrue(b.isValidRow('E'))
 
-    def testisValidInput2(self):
+    def testisValidRow2(self):
         b = BlackJack()
-        self.assertFalse(b.isValidInput('f'))
+        self.assertFalse(b.isValidRow('f'))
 
     def testinvalidInputStatement(self):
         pass
         # Can't test print statement
+
+    def testisValidSlot(self):
+        b = BlackJack()
+        self.assertTrue(b.isValidSlot('3', ['1', '2', '3', '4', '5']))
+
+    def testisValidSlot2(self):
+        b = BlackJack()
+        self.assertFalse(b.isValidSlot('3', ['1', '2', 'QH', '4', '5']))
+
+    def testisValidSlot3(self):
+        b = BlackJack()
+        self.assertFalse(b.isValidSlot('3', ['6', '7', '8', '9', '10']))
+
+    def testisInteger(self):
+        b = BlackJack()
+        self.assertTrue(b.isInteger('3'))
+
+    def testisInteger(self):
+        b = BlackJack()
+        self.assertFalse(b.isInteger('a'))
+
+    def testisInteger(self):
+        b = BlackJack()
+        self.assertFalse(b.isInteger('3.0'))
+
 
     # update methods tests
 
