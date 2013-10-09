@@ -264,6 +264,6 @@ class TestCards(unittest.TestCase):
         move16 = ['Row 4', 16]
         b.updateSlot(card16, move16)
         b.printTable()
-
+#hi
 
 unittest.main()
