@@ -266,6 +266,11 @@ class TestCards(unittest.TestCase):
         b.printTable()
 
 #aoweifjoa;wejfoawejfiewaf
+<<<<<<< HEAD
+#aoweifjoa;
+=======
+#aoweifjoa;weejfiewaf
+>>>>>>> 9f0b1f6896c8763be14840e9e21aea52e6224de0
 #aweofijaowiefoawefawf
 
 unittest.main()
