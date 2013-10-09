@@ -249,23 +249,26 @@ class BlackJack(object):
             inp1 = raw_input(userPrompt)
         if inp1 == 'a':
             row = 'Row 1'
-            slots = [1,2,3,4,5]
+            slots = self.table[row]
         elif inp1 == 'b':
             row = 'Row 2'
-            slots = [6,7,8,9,10]
+            slots = self.table[row]
         elif inp1 == 'c':
-            slots = [11,12,13]
+            slots = self.table[row]
             row = 'Row 3'
         elif inp1 == 'd':
             row = 'Row 4'
-            slots = [14,15,16]
+            slots = self.table[row]
         elif inp1 == 'e':
             placement = ['discard']
             return placement
             
         print 'You may place this card in slots: ' + str(slots)
         slot = raw_input('''In which slot would you like to place this card?: ''')
-
+        while not self.isValidSlot(slot, slots):
+            self.invalidInputStatement(slot)
+            print '\nYou may place this card in slots: ' + str(slots)
+            slot = raw_input('''In which slot would you like to place this card?: ''')
         print 'Your card will be placed in ' + str(row) + ' slot ' + str(slot)
         placement = [row,int(slot)]
         return placement
@@ -307,7 +310,8 @@ class BlackJack(object):
         """
         if not self.isInteger(text):
             return False
-        if not text in slots:
+        number = int(text)
+        if not number in slots:
             return False
         return True
 
@@ -342,7 +346,7 @@ class BlackJack(object):
         None -> None
         Prints invalid input text
         """
-        print "'\nYour input, '" + inputText + "', was invalid. Please re-enter."
+        print "\nYour input, '" + inputText + "', was invalid. Please re-enter."
 
 def main():
     print 'Welcome to the game!'
