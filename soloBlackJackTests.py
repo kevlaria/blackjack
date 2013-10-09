@@ -265,4 +265,7 @@ class TestCards(unittest.TestCase):
         b.updateSlot(card16, move16)
         b.printTable()
 
+#aoweifjoa;wejfoawejfiewaf
+#aweofijaowiefoawefawf
+
 unittest.main()
