@@ -11,22 +11,21 @@ class BlackJack(object):
         self.table = {'Row 1':[1,2,3,4,5], 'Row 2':[6,7,8,9,10], 'Row 3':[11,12,13], 'Row 4': [14,15,16]}
 
     def scoreGame(self, table):
-        columns = getColumnsForScoring(table)
-        columnsScore = scoreColumns(columns)
-        rowScore = scoreRows(table)
+        '''Uses the scoring functions which score both the row and column hands,
+        and returns a total score.''' 
+        columns = self.getColumnsForScoring(table)
+        columnsScore = self.scoreColumns(columns)
+        rowScore = self.scoreRows(table)
         return (columnsScore + rowScore)
 
     def scoreRows(self, table):
         '''Returns the score from the rows of the game.'''
         #here we reformat the dictionary to represent only the card's rank
         for key in table:
-            print key
             cardIndex = 0
             for card in table[key]:
-                print card
                 table[key][cardIndex] = card[:-1]
                 cardIndex += 1
-        print table
         #here we tally each hand and eventually return a total row score
         totalRowScore = 0
         intList = ['3','4','5','6','7','8','9', '10']
@@ -45,7 +44,6 @@ class BlackJack(object):
             #if so, we add 10, as 1 was already added
             if handSum < 12 and aceExistsInRow:
                 handSum += 10
-            print handSum
             #Here we score each individual hand
             if handSum > 21:
                 handScore = 0
@@ -69,7 +67,6 @@ class BlackJack(object):
         totalColumnScore = 0
         intList = ['3','4','5','6','7','8','9', '10']
         for column in columns:
-            print column
             #we keep track of the number of cards in the hand that we're scoring in case there is a blackjack scenario
             numOfCardsInColumn = 0
             aceExistsInRow = False
@@ -87,7 +84,6 @@ class BlackJack(object):
             #if so, we add 10, as 1 was already added
             if handSum < 12 and aceExistsInRow:
                 handSum += 10
-            print handSum
             #Here we score each individual hand
             if handSum > 21:
                 handScore = 0
@@ -142,8 +138,6 @@ class BlackJack(object):
         columns += [c5]
         return columns
 
-
-
     def play(self): 
         # print
         table = self.getTable()
@@ -166,7 +160,7 @@ class BlackJack(object):
             print "Table: " + str(table)
             print "Discard slots: " + str(discard)
             complete = self.checkIfGameComplete()
-        finalScore = scoreGame(table)
+        finalScore = self.scoreGame(table)
         print 'Your final score is: ', finalScore
 
     def __str__(self):
@@ -272,16 +266,6 @@ class BlackJack(object):
         placement = [row,int(slot)]
         return placement
 
-        ##    def checkIfGameComplete(self):
-
-
-        
-        ##        self.checkIfGameComplete()
-        #        '''(h) repeat steps 4 through 7 until the game is actually complete.
-        #        (i) scoreGame
-        #        (j) print some message saying the game is done'''
-
-    # get methods
 
     def getTable(self):
         """
