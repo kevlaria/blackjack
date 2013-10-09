@@ -264,27 +264,5 @@ class TestCards(unittest.TestCase):
         move16 = ['Row 4', 16]
         b.updateSlot(card16, move16)
         b.printTable()
-<<<<<<< HEAD
-<<<<<<< HEAD
-#woeijfoiwjefijwf
-=======
-
-<<<<<<< HEAD
-#33333333
-
->>>>>>> f943e41c35274670c5a85a584796f56f0abb7ed9
-=======
-<<<<<<< HEAD
-#aoweifjoa;
-=======
->>>>>>> parent of 7238d96... awef
-=======
-
-#33333333
-
->>>>>>> f943e41c35274670c5a85a584796f56f0abb7ed9
-#aoweifjoa;weejfiewaf
->>>>>>> 9f0b1f6896c8763be14840e9e21aea52e6224de0
-#aweofijaowiefoawefawf
 
 unittest.main()
