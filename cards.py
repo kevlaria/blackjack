@@ -1,5 +1,7 @@
 import random  # needed for shuffling a Deck
 
+#adding something
+
 class Card(object):
     """Denote a single card.
     The card has a suit - 'S','C','H', 'D'
