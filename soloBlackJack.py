@@ -109,7 +109,9 @@ class BlackJack(object):
         return totalColumnScore
                 
     def getColumnsForScoring(self, table):
-        '''Takes the table and returns a list of lists that
+        '''
+        Table -> List[List[String]
+        Takes the table and returns a list of lists that
         represent the columns of the game (rank only - for scoring purposes).'''
         columns = []
         c1 = []
@@ -144,25 +146,22 @@ class BlackJack(object):
 
     def play(self): 
         table = self.getTable()
-        print "Table: " + str(table)
+        self.printTable()
         discard = self.getDiscard()
-        print "Discard slots: " + str(discard)
+        print "\nDiscard slots: " + str(discard)
 ##        self.initializeGame()
-        print
-        print 'You have been dealt:'
+
         deck = Deck()
         complete = False
         while not complete:
             #TODO Priority Low - should we shuffle the cards every time we loop?
             deck.shuffle()
             card = deck.deal()
-            print card
-            print
+            print '\nYou have been dealt: ' + str(card.rank) + str(card.suit) + '\n'
             move = self.askUserForMove()
             self.placeMove(card, move)
-            print
-            print "Table: " + str(table)
-            print "Discard slots: " + str(discard)
+            print '\nTable: ' + str(table)
+            print '\nDiscard slots: ' + str(discard)
             complete = self.checkIfGameComplete()
         finalScore = self.scoreGame(table)
         print 'Your final score is: ', finalScore
@@ -224,14 +223,12 @@ class BlackJack(object):
         for lst in self.table.values():
             for slot in lst:
                 if type(slot) == int:
-                    print
+                    #TODO - eventaully we probably don't want to keep this 'Not done!' and 'Done!'?
                     print 'Not done!'
                     return False
-        print
+            
         print 'Done!'
         return True
-
-
 
 
     def askUserForMove(self):
@@ -347,6 +344,16 @@ class BlackJack(object):
         Prints invalid input text
         """
         print "\nYour input, '" + inputText + "', was invalid. Please re-enter."
+
+    def printTable(self):
+       """
+       None -> None
+       Prints table
+       """
+       table = self.getTable()
+       print '\nTable: ' + '\n\tRow 1: ' + str(table['Row 1']) + '\n\tRow 2: ' + str(table['Row 2']) + '\n\tRow 3: ' + str(table['Row 3']) + '\n\tRow 4: ' + str(table['Row 4'])
+
+
 
 def main():
     print 'Welcome to the game!'

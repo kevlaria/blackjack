@@ -69,6 +69,7 @@ class TestCards(unittest.TestCase):
         self.assertEqual('Rank: A; Suit S', str(deck))
 
     ## soloBlackJack class tests
+    # game (ie non-scoring) tests
     # getters and validation methods tests
 
     def testgetTable(self):
@@ -97,6 +98,10 @@ class TestCards(unittest.TestCase):
         pass
         # Can't test print statement
 
+    def testprintTable(self):
+        pass
+        # Can't test print statement
+
     def testisValidSlot(self):
         b = BlackJack()
         self.assertTrue(b.isValidSlot('3', [1, 2, 3, 4, 5]))
@@ -120,6 +125,17 @@ class TestCards(unittest.TestCase):
     def testisInteger(self):
         b = BlackJack()
         self.assertFalse(b.isInteger('3.0'))
+
+    def testStringBlackJack(self):
+        b = BlackJack()
+        self.assertEquals("{'Row 1': [1, 2, 3, 4, 5], 'Row 3': [11, 12, 13], 'Row 2': [6, 7, 8, 9, 10], 'Row 4': [14, 15, 16]}\n[17, 18, 19, 20]", str(b))
+
+    def testStringBlackJack1(self):
+        b = BlackJack()
+        card = Card('A', 'S')
+        move = ['Row 3', 12]
+        b.updateSlot(card, move)
+        self.assertEquals("{'Row 1': [1, 2, 3, 4, 5], 'Row 3': [11, 'AS', 13], 'Row 2': [6, 7, 8, 9, 10], 'Row 4': [14, 15, 16]}\n[17, 18, 19, 20]", str(b))
 
 
     # update methods tests
@@ -178,4 +194,76 @@ class TestCards(unittest.TestCase):
         b.updateDiscard(card3, move)
         b.updateDiscard(card4, move)
         self.assertEqual(['AS', 'KS', 'QS', 'JS'], b.updateDiscard(card5, move))
+
+    def testaskUserForMove(self):
+        pass
+        # Can't test method with user input
+
+    # Scoring function tests
+
+    def testColumnsForScoring(self):
+        self.playGame()
+
+    # Helper functions
+
+    def playGame(self):
+        """
+        Plays an entire game, and creates the following table:
+        Row 1: ['AS', '2S', '3S', '4S', '5S']
+        Row 2: ['6S', '7S', '8S', '9S', '10S']
+        Row 3: ['JS', 'QS', 'KS']
+        Row 4: ['AD', '2D', '3D']
+        """
+        b = BlackJack()
+        card1 = Card('A', 'S')
+        move1 = ['Row 1', 1]
+        b.updateSlot(card1, move1)
+        card2 = Card('2', 'S')
+        move2 = ['Row 1', 2]
+        b.updateSlot(card2, move2)
+        card3 = Card('3', 'S')
+        move3 = ['Row 1', 3]
+        b.updateSlot(card3, move3)
+        card4 = Card('4', 'S')
+        move4 = ['Row 1', 4]
+        b.updateSlot(card4, move4)
+        card5 = Card('5', 'S')
+        move5 = ['Row 1', 5]
+        b.updateSlot(card5, move5)
+        card6 = Card('6', 'S')
+        move6 = ['Row 2', 6]
+        b.updateSlot(card6, move6)
+        card7 = Card('7', 'S')
+        move7 = ['Row 2', 7]
+        b.updateSlot(card7, move7)
+        card8 = Card('8', 'S')
+        move8 = ['Row 2', 8]
+        b.updateSlot(card8, move8)
+        card9 = Card('9', 'S')
+        move9 = ['Row 2', 9]
+        b.updateSlot(card9, move9)
+        card10 = Card('10', 'S')
+        move10 = ['Row 2', 10]
+        b.updateSlot(card10, move10)
+        card11 = Card('J', 'S')
+        move11 = ['Row 3', 11]
+        b.updateSlot(card11, move11)
+        card12 = Card('Q', 'S')
+        move12 = ['Row 3', 12]
+        b.updateSlot(card12, move12)
+        card13 = Card('K', 'S')
+        move13 = ['Row 3', 13]
+        b.updateSlot(card13, move13)
+        card14 = Card('A', 'D')
+        move14 = ['Row 4', 14]
+        b.updateSlot(card14, move14)
+        card15 = Card('2', 'D')
+        move15 = ['Row 4', 15]
+        b.updateSlot(card15, move15)
+        card16 = Card('3', 'D')
+        move16 = ['Row 4', 16]
+        b.updateSlot(card16, move16)
+        b.printTable()
+
+
 unittest.main()
