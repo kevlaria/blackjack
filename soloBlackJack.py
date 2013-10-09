@@ -10,12 +10,139 @@ class BlackJack(object):
         self.discard = [17,18,19,20]
         self.table = {'Row 1':[1,2,3,4,5], 'Row 2':[6,7,8,9,10], 'Row 3':[11,12,13], 'Row 4': [14,15,16]}
 
-    def main():
-        print 'Welcome to the game!'
-        b = BlackJack()
-        status = b.play()
-        while status == False:
-            b.play()
+    def scoreGame(self, table):
+        columns = getColumnsForScoring(table)
+        columnsScore = scoreColumns(columns)
+        rowScore = scoreRows(table)
+        return (columnsScore + rowScore)
+
+    def scoreRows(self, table):
+        '''Returns the score from the rows of the game.'''
+        #here we reformat the dictionary to represent only the card's rank
+        for key in table:
+            print key
+            cardIndex = 0
+            for card in table[key]:
+                print card
+                table[key][cardIndex] = card[:-1]
+                cardIndex += 1
+        print table
+        #here we tally each hand and eventually return a total row score
+        totalRowScore = 0
+        intList = ['3','4','5','6','7','8','9', '10']
+        for row in table.values():
+            aceExistsInRow = False
+            handSum = 0
+            for card in row:
+                if card in intList:
+                    handSum += int(card)
+                elif card == 'J' or card == 'Q' or card == 'K':
+                    handSum += 10
+                else:
+                    handSum += 1
+                    aceExistsInRow = True
+            #here we check to see that if there was an ace present in the row, should we make it an 11 rather than 1
+            #if so, we add 10, as 1 was already added
+            if handSum < 12 and aceExistsInRow:
+                handSum += 10
+            print handSum
+            #Here we score each individual hand
+            if handSum > 21:
+                handScore = 0
+            elif handSum < 17:
+                handScore = 1
+            elif handSum == 17:
+                handScore = 2
+            elif handSum == 18:
+                handScore = 3
+            elif handSum == 19:
+                handScore = 4
+            elif handSum == 20:
+                handScore = 5
+            elif handSum == 21:
+                handScore = 7
+            totalRowScore += handScore
+        return totalRowScore
+
+    def scoreColumns(self, columns):
+        '''Takes in the columns list of lists and scores the columns.'''
+        totalColumnScore = 0
+        intList = ['3','4','5','6','7','8','9', '10']
+        for column in columns:
+            print column
+            #we keep track of the number of cards in the hand that we're scoring in case there is a blackjack scenario
+            numOfCardsInColumn = 0
+            aceExistsInRow = False
+            handSum = 0
+            for card in column:
+                if card in intList:
+                    handSum += int(card)
+                elif card == 'J' or card == 'Q' or card == 'K':
+                    handSum += 10
+                else:
+                    handSum += 1
+                    aceExistsInRow = True
+                numOfCardsInColumn += 1
+            #here we check to see that if there was an ace present in the column, should we make it an 11 rather than 1
+            #if so, we add 10, as 1 was already added
+            if handSum < 12 and aceExistsInRow:
+                handSum += 10
+            print handSum
+            #Here we score each individual hand
+            if handSum > 21:
+                handScore = 0
+            elif handSum < 17:
+                handScore = 1
+            elif handSum == 17:
+                handScore = 2
+            elif handSum == 18:
+                handScore = 3
+            elif handSum == 19:
+                handScore = 4
+            elif handSum == 20:
+                handScore = 5
+            elif handSum == 21:
+                #checks for blackjack here
+                if numOfCardsInColumn == 2:
+                    handScore = 10
+                else:
+                    handScore = 7
+            totalColumnScore += handScore
+        return totalColumnScore
+                
+    def getColumnsForScoring(self, table):
+        '''Takes the table and returns a list of lists that
+        represent the columns of the game (rank only - for scoring purposes).'''
+        columns = []
+        c1 = []
+        c1.append(table['Row 1'][0][:-1])
+        c1.append(table['Row 2'][0][:-1])
+        columns += [c1]
+        c2 = []
+        c2.append(table['Row 1'][-1][:-1])
+        c2.append(table['Row 2'][-1][:-1])
+        columns += [c2]
+        c3 = []
+        c3.append(table['Row 1'][1][:-1])
+        c3.append(table['Row 2'][1][:-1])
+        c3.append(table['Row 3'][0][:-1])
+        c3.append(table['Row 4'][0][:-1])
+        columns += [c3]
+        c4 = []
+        c4.append(table['Row 1'][2][:-1])
+        c4.append(table['Row 2'][2][:-1])
+        c4.append(table['Row 3'][1][:-1])
+        c4.append(table['Row 4'][1][:-1])
+        columns += [c4]
+        c5 = []
+        c5.append(table['Row 1'][3][:-1])
+        c5.append(table['Row 2'][3][:-1])
+        c5.append(table['Row 3'][2][:-1])
+        c5.append(table['Row 4'][2][:-1])
+        columns += [c5]
+        return columns
+
+
 
     def play(self): 
         # print
@@ -27,13 +154,20 @@ class BlackJack(object):
         print
         print 'You have been dealt:'
         deck = Deck()
-        deck.shuffle()
-        card = deck.deal()
-        print card
-        print
-        move = self.askUserForMove()
-        self.placeMove(card, move)
-        return self.checkIfGameComplete()
+        complete = False
+        while not complete:
+            deck.shuffle()
+            card = deck.deal()
+            print card
+            print
+            move = self.askUserForMove()
+            self.placeMove(card, move)
+            print
+            print "Table: " + str(table)
+            print "Discard slots: " + str(discard)
+            complete = self.checkIfGameComplete()
+        finalScore = scoreGame(table)
+        print 'Your final score is: ', finalScore
 
     def __str__(self):
         """
@@ -64,7 +198,7 @@ class BlackJack(object):
             self.table[inputRow] = tableRow
         else:
             inputText = str(inputRow) + ", Slot " + str(inputSlot)
-            print self.invalidInputStatement(inputText)
+            self.invalidInputStatement(inputText)
         return self.table
 
     def updateDiscard(self, card, move):
@@ -196,5 +330,11 @@ class BlackJack(object):
         """
         print "'\nYour input, '" + inputText + "', was invalid. Please re-enter."
 
+def main():
+    print 'Welcome to the game!'
+    b = BlackJack()
+    status = b.play()
+    while status == False:
+        b.play()
 
     

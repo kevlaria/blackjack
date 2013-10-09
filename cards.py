@@ -1,7 +1,5 @@
 import random  # needed for shuffling a Deck
 
-#adding something
-
 class Card(object):
     """Denote a single card.
     The card has a suit - 'S','C','H', 'D'
@@ -45,7 +43,7 @@ class Deck(object):
         13 cards in each of 4 suits
         """
         possSuit = ['S','C','H','D']
-        possRank = ['A', '2','3','4','5','6','7','8','9','10', 'J','Q','K']
+        possRank = ['A', '2','3','4','5','6','7','8','9', '10', 'J','Q','K']
         self.__deck = []
         for i in possSuit:
             for j in possRank:
