@@ -18,7 +18,7 @@ class Card(object):
         """
         None -> string
         """
-        return 'Rank: ' + str(self.rank) + '; Suit: ' + str(self.suit)
+        return str(self.rank) + str(self.suit)
 
     def get_rank(self):
         """
