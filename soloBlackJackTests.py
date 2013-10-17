@@ -1,3 +1,5 @@
+# Vincent Inverso, Kevin Lee
+
 from soloBlackJack import *
 from cards import *
 import unittest
@@ -66,10 +68,18 @@ class TestCards(unittest.TestCase):
     def testStringDeck(self):
         deck = Deck()
         card = deck.get_deck()[0]
-        self.assertEqual('AS', str(deck))
+        self.assertEqual('AS\n2S\n3S\n4S\n5S\n6S\n7S\n8S\n9S\n10S\nJS\nQS\nKS\nAC\n2C\n3C\n4C\n5C\n6C\n7C\n8C\n9C\n10C\nJC\nQC\nKC\nAH\n2H\n3H\n4H\n5H\n6H\n7H\n8H\n9H\n10H\nJH\nQH\nKH\nAD\n2D\n3D\n4D\n5D\n6D\n7D\n8D\n9D\n10D\nJD\nQD\nKD\n', str(deck))
 
     ## soloBlackJack class tests
     # game (ie non-scoring) tests
+
+    def testmain(self):
+        pass
+        # Can't test method that returns nothing
+
+    def testinitializeGame(self):
+        pass
+        # Can't test method that returns nothing
 
     def testplay(self):
         pass
@@ -246,8 +256,7 @@ class TestCards(unittest.TestCase):
 
     def testgetColumnsForScoring(self):
         game = self.playGame()
-        table = game.getTable()
-        columns = game.getColumnsForScoring(table)
+        columns = game.getColumnsForScoring()
         self.assertEqual('A', columns[0][0].get_rank())
         self.assertEqual('10', columns[1][1].get_rank())
         self.assertEqual('2', columns[3][3].get_rank())
@@ -269,6 +278,7 @@ class TestCards(unittest.TestCase):
         b = BlackJack()
         self.assertEqual(30, b.sumList([10, 10, 10]))
         self.assertEqual(11, b.sumList([10, 1]))
+        self.assertEqual(30, b.sumList([5, 10, 15]))
 
     def testlistScore(self):
         b = BlackJack()
@@ -307,35 +317,29 @@ class TestCards(unittest.TestCase):
 
     def testscoreRows(self):
         game = self.playGame()
-        table = game.getTable()
-        self.assertEqual(2, game.scoreRows(table))
+        self.assertEqual(2, game.scoreRows())
 
     def testscoreRows(self):
         game = self.playGame2()
-        table = game.getTable()
-        self.assertEqual(22, game.scoreRows(table))
+        self.assertEqual(22, game.scoreRows())
 
     def testscoreRows3(self):
         game = self.playGame3()
-        table = game.getTable()
-        self.assertEqual(9, game.scoreRows(table))
+        self.assertEqual(9, game.scoreRows())
 
     def testscoreColumns(self):
         game = self.playGame()
-        table = game.getTable()
-        columns = game.getColumnsForScoring(table)
+        columns = game.getColumnsForScoring()
         self.assertEqual(8, game.scoreColumns(columns))
 
     def testscoreColumns2(self):
         game = self.playGame2()
-        table = game.getTable()
-        columns = game.getColumnsForScoring(table)
+        columns = game.getColumnsForScoring()
         self.assertEqual(18, game.scoreColumns(columns))
 
     def testscoreColumns3(self):
         game = self.playGame3()
-        table = game.getTable()
-        columns = game.getColumnsForScoring(table)
+        columns = game.getColumnsForScoring()
         self.assertEqual(31, game.scoreColumns(columns))
 
 
@@ -375,6 +379,10 @@ class TestCards(unittest.TestCase):
         # Can't test print statement
 
     def testprintDiscard(self):
+        pass
+        #Can't test print statement
+
+    def testdisplayTable(self):
         pass
         #Can't test print statement
 

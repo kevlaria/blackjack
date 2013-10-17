@@ -1,4 +1,7 @@
+# Vincent Inverso, Kevin Lee
+
 import random  # needed for shuffling a Deck
+import sys
 
 class Card(object):
     """Denote a single card.
@@ -8,7 +11,7 @@ class Card(object):
     
     def __init__(self, r, s):
         """
-        None -> card
+        String, string -> Card
         Implementation of a card, where r is the rank, s is suit
         """
         self.rank = r
@@ -39,6 +42,7 @@ class Deck(object):
      
     def __init__(self):
         """
+        None -> Deck
         Initialize deck as a list of all 52 cards:
         13 cards in each of 4 suits
         """
@@ -73,6 +77,7 @@ class Deck(object):
             return self.__deck.pop()
         else:
             print "No more cards"
+            sys.exit(0)
     
     def __str__(self):
         """

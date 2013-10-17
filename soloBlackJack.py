@@ -1,4 +1,7 @@
+# Vincent Inverso, Kevin Lee
+
 from cards import *
+
 
 ## Methods listing
 # Game Playing methods
@@ -7,7 +10,17 @@ from cards import *
 # Validation Methods
 # Print Methods
 
+# use the main() function to start game
+
 class BlackJack(object):
+
+    def main(self):
+        """
+        None -> None
+        Prints a welcome statement and gets the game running
+        """
+        print 'Welcome to the game!'
+        self.initializeGame()
  
     def __init__(self):
         """
@@ -18,35 +31,42 @@ class BlackJack(object):
         self.table = {'Row 1':[1,2,3,4,5], 'Row 2':[6,7,8,9,10], 'Row 3':[11,12,13], 'Row 4': [14,15,16]}
 
 
+    def __str__(self):
+        """
+        None -> Str
+        """
+        return str(self.table) + '\n' + str(self.discard)
+
+
     # Game Playing methods
 
-
-    def play(self): 
+    def initializeGame(self):
         """
         None -> None
+        Initialises game
+        """
+        deck = Deck()
+        deck.shuffle()
+        status = self.play(deck)
+        while status == False:
+            self.play(deck)
+
+    def play(self, deck): 
+        """
+        Deck -> None
         Runs the game from beginning to end (by displaying final score)
         """
-        print '\n*************************************'
-        self.printTable()
-        print '\n'
-        self.printDiscardSlots()
-        print '\n'
-        deck = Deck()
+        self.displayTable()
         complete = False
         while not complete:
-            #TODO Priority Low - should we shuffle the cards every time we loop?
-            deck.shuffle()
             card = deck.deal()
-            print '\n*************************************'
+            print '\n*************************************' 
             print '\nYou have been dealt: ' + str(card) + '\n'
             move = self.askUserForMove()
             self.placeMove(card, move)
-            print '\n*************************************'
-            self.printTable()
-            print '\n'
-            self.printDiscardSlots()
-            print '\n'
+            self.displayTable()
             complete = self.checkIfGameComplete()
+        print 'Calculating your score....'
         finalScore = self.scoreGame()
         print 'Your final score is: ', finalScore
 
@@ -58,7 +78,7 @@ class BlackJack(object):
         """
 
         placement = []
-        userPrompt = """Which row would you like to place this card in, (enter a, b, c, d, or e)?:\n\ta) Row 1\n\tb) Row 2\n\tc) Row 3\n\td) Row 4\n\te) Discard\nYour entry: """
+        userPrompt = """Which row would you like to place this card in, (enter a, b, c, d, or e)?:\n\ta) Row 1\n\tb) Row 2\n\tc) Row 3\n\td) Row 4\n\te) Discard\n Your entry: """
 
         inp1 = raw_input(userPrompt)
         while not self.isValidRow(inp1):
@@ -213,20 +233,19 @@ class BlackJack(object):
         Uses the scoring functions which score both the row and column hands,
         and returns a total score.
         '''
-        table = self.getTable()
-        rowsScore = self.scoreRows(table)
-        columns = self.getColumnsForScoring(table)
+        rowsScore = self.scoreRows()
+        columns = self.getColumnsForScoring()
         columnsScore = self.scoreColumns(columns)
         totalScore = columnsScore + rowsScore
         return totalScore
 
 
-    def scoreRows(self, table):
+    def scoreRows(self):
         '''
-        Table -> Integer
+        None -> Integer
         Returns the score from all the rows of the game.
         '''
-        #here we tally each row and eventually return a total row score
+        table = self.getTable()
         totalRowScore = 0
         for row in table.values():
             handScore = self.scoreSingleList(row)
@@ -236,8 +255,8 @@ class BlackJack(object):
 
     def scoreSingleList(self, rowOfCards):
         """
-        List[Cards,...] -> Row
-        Given a row of cards, give the score of a single row
+        List[Cards,...] -> Int
+        Given a single row of cards, give the score of a single row
         """
         cardsInRow = len(rowOfCards)
         rankList = self.getRanksInList(rowOfCards)
@@ -269,7 +288,7 @@ class BlackJack(object):
         List[Int,...], Int
         Takes a list of ranks, and returns the sum of the ranks
         """
-        return sum(rankList)
+        return reduce(lambda x, y: x + y, rankList)
 
 
     def isAceInList(self, ranks):
@@ -284,7 +303,7 @@ class BlackJack(object):
             
     def listScore(self, handSum, aceExistsInRow, cardsInRow):
         """
-        Int -> Int
+        Int, Boolean, Int -> Int
         Takes in a sum of a list of cards, and returns the score
         """
         handScore = 0
@@ -313,12 +332,13 @@ class BlackJack(object):
         return handScore
 
 
-    def getColumnsForScoring(self, table):
+    def getColumnsForScoring(self):
         '''
-        None -> List[List[Card]]
+        None -> List[List[Card,...]]
         Takes the table and returns a list of lists of Card objects that
         represent the columns of the game
         '''
+        table = self.getTable()
         columns = []
         c1 = [] #Leftmost column
         c1.append(table['Row 1'][0])
@@ -474,26 +494,25 @@ class BlackJack(object):
                else:
                    print str(slot) + '    ',
 
-
     def printDiscardSlots(self):
+        """
+        None -> None
+        Prints the discard list
+        """
         discardList = self.getDiscard()
         print "Discard Slots: \n\n\t",
         for card in discardList:
             print str(card) + '\t',
 
 
-    def __str__(self):
+    def displayTable(self):
         """
-        None -> Str
+        None -> None
+        Prints the table and discard list with appropriate formatting
         """
-        return str(self.table) + '\n' + str(self.discard)
+        print '\n*************************************'
+        self.printTable()
+        print '\n'
+        self.printDiscardSlots()
+        print '\n'
 
-
-def main():
-    print 'Welcome to the game!'
-    b = BlackJack()
-    status = b.play()
-    while status == False:
-        b.play()
-
- 
