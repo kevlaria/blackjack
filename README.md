@@ -1,6 +1,6 @@
 blackjack
 =========
 
-This is a game of blackjack.
+Python implementation of the following game:
 
-this is Kevin's message
+http://www.solitairenetwork.com/Solitaire/blackjack-square-solitaire-game.html
