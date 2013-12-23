@@ -1,5 +1,3 @@
-# Vincent Inverso, Kevin Lee
-
 import random  # needed for shuffling a Deck
 import sys
 

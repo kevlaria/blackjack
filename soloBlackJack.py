@@ -1,5 +1,3 @@
-# Vincent Inverso, Kevin Lee
-
 from cards import *
 
 
@@ -137,6 +135,10 @@ class BlackJack(object):
 
 
     def placeMove(self, card, move):
+        """
+        Card, List[String] or List[String, Int] -> Table
+        Places a card on the table in the location specified in move (Row, Slot)
+        """
         if move == ['discard']:
             updatedDiscard = self.updateDiscard(card)
             return updatedDiscard
@@ -178,7 +180,7 @@ class BlackJack(object):
 
     def availableSlots(self, row):
         """
-        String -> String / List
+        String -> String / List[Int,...]
         Takes in a row name, and either returns a list of the slots that are available, or a string indicating that the row is full
         """
         table = self.getTable()
@@ -200,7 +202,7 @@ class BlackJack(object):
 
     def slotChecker(self, slotsInRow):
         """
-        List[Int,...] -> String / List
+        List[Int,...] -> String / List[Int,...]
         Given a list of slots, checks if there are free slots in a row. If not full, returns a list of the slots that are avialable, or a string indicating that the row is full
         """
         slotsAvailable = []

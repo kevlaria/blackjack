@@ -1,5 +1,3 @@
-# Vincent Inverso, Kevin Lee
-
 from soloBlackJack import *
 from cards import *
 import unittest
